@@ -8,10 +8,13 @@ const crypto = require("crypto");
 const app = express();
 
 // MongoDB connection
-mongoose.connect("mongodb://localhost/passkey-auth", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  "mongodb+srv://ashishprasad9833:fVBJUM78LvabfeB9@cluster0.amaxut4.mongodb.net/",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 const passageConfig = {
   appID: "l0a8KTe3N5Lbiw7MfrL4gwcV",
@@ -71,13 +74,9 @@ let passageAuthMiddleware = (() => {
 })();
 
 // Function to encrypt a password
-function encrypt(text) {
+function encrypt(text, id) {
   const algorithm = "aes-256-cbc";
-  const key = crypto.scryptSync(
-    "aA#k1ZjPqRtGv$5nYl*W7p@3sF8mKoH6E",
-    "3!pB#9cS$eRtYvXm&lN1oA5lZ",
-    32
-  );
+  const key = crypto.scryptSync(id, "3!pB#9cS$eRtYvXm&lN1oA5lZ", 32);
   const iv = Buffer.alloc(16, 0); // Initialization vector
 
   const cipher = crypto.createCipheriv(algorithm, key, iv);
@@ -88,13 +87,9 @@ function encrypt(text) {
 }
 
 // Function to decrypt a password
-function decrypt(encryptedText) {
+function decrypt(encryptedText, id) {
   const algorithm = "aes-256-cbc";
-  const key = crypto.scryptSync(
-    "aA#k1ZjPqRtGv$5nYl*W7p@3sF8mKoH6E",
-    "3!pB#9cS$eRtYvXm&lN1oA5lZ",
-    32
-  );
+  const key = crypto.scryptSync(id, "3!pB#9cS$eRtYvXm&lN1oA5lZ", 32);
   const iv = Buffer.alloc(16, 0); // Initialization vector
 
   const decipher = crypto.createDecipheriv(algorithm, key, iv);
@@ -154,7 +149,8 @@ app.get("/vault", async (req, res) => {
 
   // Decrypt the passwords in the vault
   user.vault.forEach((entry) => {
-    entry.password = decrypt(entry.password);
+    entry.username = decrypt(entry.username, user.id);
+    entry.password = decrypt(entry.password, user.id);
   });
 
   res.render("vault", {
@@ -176,12 +172,13 @@ app.post("/create-vault", async (req, res) => {
     const user = await User.findOne({ id: req.session.user._id });
 
     // Encrypt the password
-    const encryptedPassword = encrypt(password);
+    const encryptedUsername = encrypt(username, user.id);
+    const encryptedPassword = encrypt(password, user.id);
 
     // Push the encrypted password to the vault
     user.vault.push({
       websiteName: websiteName,
-      username: username,
+      username: encryptedUsername,
       password: encryptedPassword, // Store the encrypted password
     });
 
