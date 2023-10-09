@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create New Password - Passwordless Password Manager</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- Include Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- Custom CSS -->
+    <style>
+      /* Add custom styles here */
+      body {
+        background-color: #f0f0f0;
+      }
+      .container-fluid {
+        padding: 0;
+      }
+      .sidebar {
+        background-color: #333;
+        color: #fff;
+        height: 100vh;
+      }
+      .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      .sidebar li {
+        padding: 10px;
+      }
+      .content {
+        padding: 20px;
+      }
+      .form-group {
+        text-align: left;
+      }
+      .password-input {
+        font-weight: bold;
+        padding: 5px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 sidebar">
+          <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/create-vault">Create New Vault</a></li>
+            <li><a href="/vault">Vault</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <!-- Add more sidebar links as needed -->
+          </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="col-md-10 content">
+          <h2>Create New Password</h2>
+          <form id="password-form" method="post" action="/create-vault">
+            <div class="form-group">
+              <label for="websiteName">Website Name:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="websiteName"
+                name="websiteName"
+                required
+                autocomplete="off"
+              />
+            </div>
+            <div class="form-group">
+              <label for="username">Username:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                name="username"
+                required
+                autocomplete="off"
+              />
+            </div>
+            <div class="form-group">
+              <label>Password:</label>
+              <input
+                type="text"
+                class="form-control password-input"
+                id="password"
+                name="password"
+                autocomplete="off"
+              />
+              <button
+                type="button"
+                class="btn btn-primary mt-2"
+                id="generatePassword"
+              >
+                Generate Password
+              </button>
+            </div>
+            <div class="form-group">
+              <label for="passwordLength">Password Length:</label>
+              <input
+                type="range"
+                class="form-control-range"
+                id="passwordLength"
+                name="passwordLength"
+                min="8"
+                max="20"
+                value="12"
+              />
+              <span id="passwordLengthValue">12</span>
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="includeNumbers"
+                name="includeNumbers"
+                checked
+              />
+              <label class="form-check-label" for="includeNumbers"
+                >Include Numbers</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="includeUppercase"
+                name="includeUppercase"
+                checked
+              />
+              <label class="form-check-label" for="includeUppercase"
+                >Include Uppercase Letters</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="includeLowercase"
+                name="includeLowercase"
+                checked
+              />
+              <label class="form-check-label" for="includeLowercase"
+                >Include Lowercase Letters</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="includeSymbols"
+                name="includeSymbols"
+              />
+              <label class="form-check-label" for="includeSymbols"
+                >Include Symbols</label
+              >
+            </div>
+            <button type="submit" class="btn btn-success mt-3">
+              Save Password
+            </button>
+          </form>
+        </main>
+      </div>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+      // Function to generate a random password based on user preferences
+      function generateRandomPassword() {
+        const length = parseInt($("#passwordLength").val());
+        const includeNumbers = $("#includeNumbers").prop("checked");
+        const includeUppercase = $("#includeUppercase").prop("checked");
+        const includeLowercase = $("#includeLowercase").prop("checked");
+        const includeSymbols = $("#includeSymbols").prop("checked");
+
+        const charset = "abcdefghijklmnopqrstuvwxyz";
+        const numbers = "0123456789";
+        const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const symbols = "!@#$%^&*()-_=+[]{}|;:'\",.<>/?";
+
+        let validChars = charset;
+        if (includeNumbers) validChars += numbers;
+        if (includeUppercase) validChars += uppercase;
+        if (includeLowercase) validChars += charset;
+        if (includeSymbols) validChars += symbols;
+
+        let password = "";
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * validChars.length);
+          password += validChars[randomIndex];
+        }
+
+        $("#password").val(password);
+      }
+
+      $(document).ready(function () {
+        // Initialize password length slider value
+        $("#passwordLengthValue").text($("#passwordLength").val());
+
+        // Update slider value on change
+        $("#passwordLength").on("input", function () {
+          $("#passwordLengthValue").text($(this).val());
+        });
+
+        // Generate password when "Generate Password" button is clicked
+        $("#generatePassword").click(function () {
+          generateRandomPassword();
+        });
+      });
+    </script>
+
+    <script>
+      // Prevent form submission
+      $("#password-form").submit(function (e) {
+        e.preventDefault();
+
+        // Add your code to save the password to your database or perform other actions here
+        // For demonstration purposes, let's assume the form submission is successful
+        const form = this;
+        const websiteName = $("#websiteName").val();
+        const username = $("#username").val();
+        const password = $("#password").val();
+
+        // You can replace this with your actual code to save the data to the database
+        // In this example, we're using a setTimeout to simulate a successful submission
+        setTimeout(function () {
+          // Show SweetAlert on success
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Password saved successfully!",
+            timer: 2000, // Close alert after 2 seconds
+          }).then(() => {
+            // Submit the form after success
+            form.submit();
+          });
+        }, 1000); // Simulate a 1-second delay (you can remove this in your actual code)
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vault - Passwordless Password Manager</title>
+    <!-- Include Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- Custom CSS -->
+    <style>
+      /* Add custom styles here */
+      body {
+        background-color: #f0f0f0;
+      }
+      .container-fluid {
+        padding: 0;
+      }
+      .sidebar {
+        background-color: #333;
+        color: #fff;
+        height: 100vh;
+      }
+      .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      .sidebar li {
+        padding: 10px;
+      }
+      .content {
+        padding: 20px;
+      }
+      .table-responsive {
+        max-height: 400px;
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 sidebar">
+          <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/create-vault">Create a New Vault</a></li>
+            <li><a href="">Vault</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <!-- Add more sidebar links as needed -->
+          </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="col-md-10 content">
+          <h2>Welcome <%= user.displayName %></h2>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Website Name</th>
+                  <th>Username</th>
+                  <th>Password</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% user.vault.forEach(function(pass) { %>
+                <tr>
+                  <td><%= pass.websiteName %></td>
+                  <td><%= pass.username %></td>
+                  <td><%= pass.password %></td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
