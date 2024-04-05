@@ -1,0 +1,247 @@
+body {
+  font-family: "Outfit", sans-serif !important;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #3c00a0;
+  margin: 15px 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.menu {
+  margin-right: 20px;
+  margin-top: 5px;
+}
+
+.menu button {
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #3c00a0;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.menu button:hover {
+  background-color: #5d3388;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.container img {
+  width: 100%;
+  max-width: 600px;
+  object-fit: cover;
+}
+
+.hero-text {
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 20px;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  color: #3c00a0;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  /* Prevent line break */
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 12px 24px;
+  border-radius: 12px;
+  margin: 0;
+  border: none;
+  background-color: #3c00a0;
+  color: white;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #5d3388;
+}
+
+.authn,
+.authn_o {
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  /* Reduced spacing between divs */
+}
+
+.authn h1,
+.authn_o h1 {
+  color: #3c00a0;
+  margin-bottom: 20px;
+  text-align: center;
+  /* Centering the text */
+  width: 100%;
+}
+
+.authn > div,
+.authn_o > div {
+  width: 100px;
+  /* Reduced width */
+  height: 100px;
+  margin-left: 50px;
+  margin-right: 50px;
+  background-color: #3c00a0;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.authn > div:hover,
+.authn_o > div:hover {
+  background-color: #5d3388;
+}
+
+.authn h3,
+.authn_o h3 {
+  color: white;
+  margin: 0;
+  padding: 10px;
+  line-height: 1.5em;
+}
+
+.additional-content,
+.additional-content-2,
+.additional-content-3,
+.additional-content-4,
+.additional-content-5,
+.additional-content-6 {
+  text-align: center;
+  margin: 40px auto;
+  max-width: 800px;
+  padding: 0px 25px;
+}
+
+.additional-content h1,
+.additional-content-2 h1,
+.additional-content-3 h1,
+.additional-content-4 h1,
+.additional-content-5 h1,
+.additional-content-6 h1 {
+  color: black;
+  font-weight: bold;
+  text-align: center;
+}
+
+.additional-content h3,
+.additional-content-2 h3,
+.additional-content-3 h3,
+.additional-content-4 h3,
+.additional-content-5 h3,
+.additional-content-6 h3 {
+  font-size: 1.2rem;
+  color: #000;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.additional-content-5 img,
+.additional-content-6 img {
+  max-width: 100%;
+  /* Set the maximum width to 100% of the container */
+  height: auto;
+  /* Maintain aspect ratio */
+}
+
+@media (min-width: 768px) {
+  .menu {
+    margin-top: 15px;
+  }
+
+  .container {
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 40px;
+  }
+
+  .container img {
+    order: 2;
+    width: auto;
+    max-width: 600px;
+  }
+
+  .hero-text {
+    order: 1;
+    width: 50%;
+    padding: 0 40px;
+    margin-top: 0;
+    text-align: left;
+  }
+
+  .buttons {
+    justify-content: flex-start;
+  }
+
+  .authn,
+  .authn_o {
+    flex-direction: row;
+    align-items: center;
+    /* Centering the content */
+  }
+
+  .authn > div,
+  .authn_o > div {
+    width: 100%;
+  }
+
+  .authn > div:not(:last-child),
+  .authn_o > div:not(:last-child) {
+    margin-right: 10px;
+    /* Reduced spacing between divs */
+  }
+
+  .authn > div:hover,
+  .authn_o > div:hover {
+    background-color: #5d3388;
+  }
+}

@@ -1,97 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-  </head>
-  <body>
-    <h1>Login</h1>
-    <form action="" method="post">
-      <label for="username">Username:</label>
-      <input
-        type="text"
-        name="username"
-        autocomplete="username webauthn"
-        required
-      />
-      <br />
-      <label for="username">Display Name:</label>
-      <input type="text" name="name" autocomplete="name webauthn" required />
-      <br />
-      <!-- Add a button to trigger WebAuthn registration -->
-      <button type="button" id="loginWebAuthn">Login with WebAuthn</button>
-    </form>
 
-    <script>
-      // Function to handle the registration process with WebAuthn
-      async function loginWithWebAuthn() {
-        try {
-          // Get the values of username and name from the form
-          const username = document.querySelector(
-            'input[name="username"]'
-          ).value;
-          const displayName =
-            document.querySelector('input[name="name"]').value;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
 
-          // Get a WebAuthn credential
-          let credential = await navigator.credentials.get({
-            publicKey: {
-              challenge: new Uint8Array([
-                117, 61, 252, 231, 191, 241, 123, 45, 67, 89, 10, 34,
-              ]),
-              rpId: "localhost",
-              allowCredentials: [
-                {
-                  type: "public-key",
-                  id: new Uint8Array([79, 252, 83, 72, 214, 7, 89, 26]),
-                },
-              ],
-              userVerification: "required",
-            },
-          });
-          // const credential = await navigator.credentials.create({
-          //   publicKey: {
-          //     challenge: new Uint8Array([
-          //       117, 61, 252, 231, 191, 241, 123, 45, 67, 89, 10, 34,
-          //     ]),
-          //     rp: { id: "localhost", name: "Password Manager" },
-          //     user: {
-          //       id: new Uint8Array([79, 252, 83, 72, 214, 7, 89, 26]),
-          //       name: username, // Use the username from the form
-          //       displayName: displayName, // Use the name from the form as displayName
-          //     },
-          //     pubKeyCredParams: [{ type: "public-key", alg: -7 }],
-          //   },
-          // });
+<body>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Login</div>
+          <div class="card-body">
+            <form id="loginForm">
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+              </div>
+              <button type="button" class="btn btn-primary" id="webauthnButton">Login with WebAuthn</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          console.log(credential);
+  <!-- Bootstrap JS and WebAuthn script -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@github/webauthn-json@2.2.1/browser.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Your custom script -->
+  <script src="/js/login.js"></script>
+</body>
 
-          // Send the credential data to your server for verification and storage
-          const response = await fetch("/register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ credential, username, displayName }),
-          });
-
-          if (response.ok) {
-            console.log("WebAuthn registration successful!");
-            // Redirect or display a success message
-          } else {
-            console.error("WebAuthn registration failed.");
-            // Handle the error, e.g., display an error message to the user
-          }
-        } catch (error) {
-          console.error("WebAuthn error:", error);
-          // Handle errors, e.g., display an error message to the user
-        }
-      }
-
-      // Add an event listener to the registration button
-      const registerButton = document.getElementById("registerWebAuthn");
-      registerButton.addEventListener("click", registerWithWebAuthn);
-    </script>
-  </body>
 </html>

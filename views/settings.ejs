@@ -52,7 +52,7 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="/dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
@@ -61,29 +61,15 @@
         <li class="nav-item">
           <a class="nav-link" href="/vault">Vault</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item active">
           <a class="nav-link" href="/settings">Settings</a>
         </li>
       </ul>
     </div>
   </nav>
   <div class="container">
-    <div class="row">
-      <!-- Total Passwords Saved -->
-      <div class="col-lg-6">
-        <div class="card total-passwords">
-          <h4>Total Passwords Saved</h4>
-          <p class="display-4"><%= user.vault.length %></p>
-        </div>
-      </div>
-      <!-- Passwords to be Updated -->
-      <div class="col-lg-6">
-        <div class="card passwords-to-update">
-          <h4>Passwords to be Updated</h4>
-          <p class="display-4"><%= updatePass %></p>
-        </div>
-      </div>
-    </div>
+    <passage-profile app-id=<%= APP_ID %> default-country-code="in"></passage-profile>
+    <script src="https://psg.so/web.js"></script>
   </div>
 
   <!-- Bootstrap JS -->

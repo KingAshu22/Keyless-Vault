@@ -1,88 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vault - Passwordless Password Manager</title>
-    <!-- Include Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <!-- Custom CSS -->
-    <style>
-      /* Add custom styles here */
-      body {
-        background-color: #f0f0f0;
-      }
-      .container-fluid {
-        padding: 0;
-      }
-      .sidebar {
-        background-color: #333;
-        color: #fff;
-        height: 100vh;
-      }
-      .sidebar ul {
-        list-style-type: none;
-        padding: 0;
-      }
-      .sidebar li {
-        padding: 10px;
-      }
-      .content {
-        padding: 20px;
-      }
-      .table-responsive {
-        max-height: 400px;
-        overflow-y: auto;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container-fluid">
-      <div class="row">
-        <!-- Sidebar -->
-        <nav class="col-md-2 sidebar">
-          <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/create-vault">Create a New Vault</a></li>
-            <li><a href="">Vault</a></li>
-            <li><a href="/settings">Settings</a></li>
-            <!-- Add more sidebar links as needed -->
-          </ul>
-        </nav>
 
-        <!-- Main Content -->
-        <main class="col-md-10 content">
-          <h2>Welcome <%= user.displayName %></h2>
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Website Name</th>
-                  <th>Username</th>
-                  <th>Password</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% user.vault.forEach(function(pass) { %>
-                <tr>
-                  <td><%= pass.websiteName %></td>
-                  <td><%= pass.username %></td>
-                  <td><%= pass.password %></td>
-                </tr>
-                <% }); %>
-              </tbody>
-            </table>
-          </div>
-        </main>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Manager Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom styles */
+    body {
+      font-family: "Outfit", sans-serif !important;
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      margin-top: 50px;
+    }
+
+    .card {
+      padding: 20px;
+      background-color: #3c00a0;
+      margin-bottom: 10%;
+      color: #f8f9fa;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .total-passwords,
+    .passwords-to-update {
+      text-align: center;
+    }
+
+    @media (max-width: 576px) {
+      .container {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav style="background-color: #3c00a0 !important;" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Keyless Vault</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/create-vault">Create Vault</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/vault">Vault</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/settings">Settings</a>
+        </li>
+      </ul>
     </div>
+  </nav>
+  <main class="col-md-10 content">
+    <h2>Welcome <%= user.displayName %></h2>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Last Updated On</th>
+            <th>Website Name</th>
+            <th>Username</th>
+            <th>Password</th>
+            <!-- <th>Edit</th>
+                <th>Delete</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <% user.vault.forEach(function(pass) { %>
+          <tr>
+            <td><%= pass.lastUpdated %></td>
+            <td><%= pass.websiteName %></td>
+            <td><%= pass.username %></td>
+            <td><%= pass.password %></td>
+            <!-- <td>
+                  <a href="/edit-pass/<%= pass._id %>"><i class="fa-solid fa-pen-to-square"></i></a>
+                </td>
+                <td>
+                  <a href="/delete-pass/<%= pass._id %>"><i class="fa-solid fa-trash" style="color: red"></i></a>
+                </td> -->
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </main>
 
-    <!-- Include Bootstrap JS and jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
+  <!-- Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
 </html>

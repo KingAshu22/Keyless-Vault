@@ -1,56 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Passwordless Password Manager</title>
-    <!-- Include Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <!-- Custom CSS -->
-    <style>
-      /* Add custom styles here */
-      body {
-        background-color: #f0f0f0;
-      }
-      .container {
-        text-align: center;
-        padding-top: 100px;
-      }
-      .jumbotron {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-      }
-      h1 {
-        font-size: 36px;
-      }
-      .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-      }
-      .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="jumbotron">
-        <h1>Welcome to the Passwordless Password Manager</h1>
-        <p>Your secure and convenient password manager.</p>
-        <p>
-          <a href="/sign-in" class="btn btn-primary btn-lg mr-3">Sign In</a>
-        </p>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyless Vaults</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/home.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <header>
+    <h2 class="logo" style="white-space: nowrap; margin-left: 0%; margin-top: 0;">Keyless vault</h2>
+    <div class="menu" style="margin-top: 0; margin-right: 0; white-space: nowrap;">
+      <button class="btn" style="background-color: #3c00a0;"><a href="/sign-in" style="text-decoration: none; color: #fff;">Sign In</a></button>
+    </div>
+  </header>
+  <main>
+    <div class="container" style="margin-top: 10%;">
+      <img style="margin-right: 5%; margin-top: -10%;" src="/assets/res-img.svg" alt="">
+      <div class="hero-text">
+        <h1 style="margin-left: -4%;"><span style="color: black;">A</span> <span style="color: #3c00a0;">Passwordless</span><br><span style="color: black;">Password manager</span></h1>
+        <p style="margin-left: -4%;">We Came Across to a password manager which doesn't require a password.</p>
+        <div class="buttons">
+          <button class="btn" style="background-color: #3c00a0;"><a href="/sign-in" style="text-decoration: none; color: #fff;">Sign In</a></button>
+          <button class="btn" style="background-color: #3c00a0;"><a href="/docs" style="text-decoration: none; color: #fff;">Read Docs</a></button>
+        </div>
       </div>
     </div>
+  </main>
+  <main>
+    <div>
+      <h2 style="text-align: center; color: #3c00a0; margin-top: 15%; margin-bottom: 5%;">Authentication are of three types</h2>
+      <div style="background-color: #3c00a0; color: #fff; text-align: center; margin-left: 15%; width: 72%; padding: 3% 2% 3% 2%; border-radius: 25px; margin-bottom: 2%;">
+        <h3>Something you may know, like a password.</h3>
+      </div>
+      <div style="background-color: #3c00a0; color: #fff; text-align: center; margin-left: 15%; width: 72%; padding: 3% 2% 3% 2%; border-radius: 25px; margin-bottom: 2%;">
+        <h3>Something you have, like a device</h3>
+      </div>
+      <div style="background-color: #3c00a0; color: #fff; text-align: center; margin-left: 15%; width: 72%; padding: 3% 2% 3% 2%; border-radius: 25px; margin-bottom: 2%;">
+        <h3>Something you are, like a fingerprint.</h3>
+      </div>
+    </div>
+  </main>
+  <main>
+    <div>
+      <h1 style="text-align: center; color: #3c00a0; margin-top: 10%; margin-bottom: 5%;">Advantages of Biometric Authentication</h1>
+      <div style="background-color: #3c00a0; color: #fff; text-align: center; margin-left: 15%; width: 72%; padding: 3% 2% 3% 2%; border-radius: 25px; margin-bottom: 2%;">
+        <h3>It is difficult to lose.</h3>
+      </div>
+      <div style="background-color: #3c00a0; color: #fff; text-align: center; margin-left: 15%; width: 72%; padding: 3% 2% 3% 2%; border-radius: 25px; margin-bottom: 2%;">
+        <h3>It is hard to steal.</h3>
+      </div>
+      <div style="background-color: #3c00a0; color: #fff; text-align: center; margin-left: 15%; width: 72%; padding: 3% 2% 3% 2%; border-radius: 25px; margin-bottom: 2%;">
+        <h3>It can't be shared.</h3>
+      </div>
+      <div style="background-color: #3c00a0; color: #fff; text-align: center; margin-left: 15%; width: 72%; padding: 3% 2% 3% 2%; border-radius: 25px; margin-bottom: 2%;">
+        <h3>You can't forget it.</h3>
+      </div>
+    </div>
+  </main>
+  <div class="additional-content" style="margin-top: 10%; margin-bottom: 10%;">
+    <img src="/assets/logo.svg" alt="Logo" style="width: 100px; height: 100px; margin-bottom: 20px;">
+    <h1>Your fingerprint/face never leaves your device</h1>
+    <h3>
+      <p>Biometric verification uses the local authentication mechanism of your device. On the device,
+        these biometric information is strongly protected and never exposed.</p>
+    </h3>
+    <h3>
+      <p>Verification is a safety measure used to prove that you are you, and then to create or access cryptographic keys stored on your device. These keys,
+        also known as passkeys, are in turn used for the authentication mechanism.</p>
+    </h3>
+  </div>
+  <div class="additional-content-2" style="margin-top: 10%; margin-bottom: 10%;">
+    <img src="/assets/logo1.svg" alt="Logo" style="width: 100px; height: 100px; margin-bottom: 20px;">
+    <h1>It protects you from phishing</h1>
+    <h3>
+      <p>Phishing usually involves tricking a user into entering their password into a fake website, or other
+        approaches such as social engineering. It is the most common way of hacking accounts..</p>
+    </h3>
+    <h3>
+      <p>By getting rid of passwords, you get rid of phishing! Great, right?</p>
+    </h3>
+    <h3>
+      <p>As long as you don’t possess an allowed device, you will not be able to sign in.</p>
+    </h3>
+  </div>
+  <div class="additional-content-3" style="margin-top: 10%; margin-bottom: 10%;">
+    <img src="/assets/logo2.svg" alt="Logo" style="width: 100px; height: 100px; margin-bottom: 20px;">
+    <h1>Multi-device and platform neutral</h1>
+    <h3>
+      <p>Authentication only works for allowed devices, but of course you can register another device simply by scanning a QR code or clicking on a link. Each device can then be used to authenticate directly using its own local
+        authentication mechanism (for example TouchID on your phone, and PIN on your laptop).</p>
+    </h3>
+    <h3>
+      <p>Depending on the platform you use, your passkeys may also be automatically synced into the cloud by its built-in password manager,
+        propagating to all devices of the same platform (Windows, Android or iOS).</p>
+    </h3>
+  </div>
+  <div class="additional-content-4" style="margin-top: 10%; margin-bottom: 10%;">
+    <img src="/assets/logo3.svg" alt="Logo" style="width: 100px; height: 100px; margin-bottom: 20px;">
+    <h1>How does it work exactly?</h1>
+    <h3>
+      <p>The authentication relies on a recent browser protocol called WebAuthn, which is based on asymmetric cryptography.</p>
+    </h3>
+    <h3>
+      <p>Upon registration, a cryptographic key pair is generated for the user. The private key is stored on the device,
+        protected by local authentication, while the public key is sent to the server.</p>
+    </h3>
+    <h3>
+      <p>When a user wants to authenticate themselves, they must sign a random “challenge” using their private key.
+        This signature is sent to the server, which verifies it against the user’s public key.</p>
+    </h3>
+  </div>
+  <div class="additional-content-5" style="margin-top: 10%; margin-bottom: 10%;">
+    <h1><span style="color: red;">Registration Flow is as follows</span> </h1>
+    <img src="/assets/WebAuthn_Registration_Flow.png">
+  </div>
+  <div class="additional-content-6" style="margin-top: 10%; margin-bottom: 10%;">
+    <h1><span style="color: red;">Login Flow is as follows</span> </h1>
+    <img src="/assets/WebAuthn_Authentication_Flow.png">
+  </div>
+  <section style="text-align: center; color: white;">
+    <div style="background-color:#3c00a0; padding-bottom: 50px; padding-top: 5%; padding-bottom: 5%;">
+      <h1 style="padding: 5%;">Keyless vault</h1>
+      <h4>Created by</h4>
+      <div class="row" style="padding-bottom: 5%; padding-top: 2%;">
+        <div class="col">
+          <h2>Ashish Prasad</h2>
+        </div>
+        <div class="col">
+          <h2>Kajal Shukla</h2>
+        </div>
+        <div class="col">
+          <h2>Sanika Bhoir</h2>
+        </div>
+      </div>
+      <h5>Under the guidance of:</h5>
+      <h3 style="padding-top: 2%;">Mr. Akshay Agarwal</h3>
+      <p>Universal College of Engineering, Kaman, Vasai, 401208</p>
+    </div>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
 
-    <!-- Include Bootstrap JS and jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
 </html>

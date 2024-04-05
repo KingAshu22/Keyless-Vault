@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2f4f3;
+  font-family: "Arial", sans-serif;
+}
+
+.container {
+  display: flex;
+  width: 30rem;
+  height: 20rem;
+  margin: 0 1rem;
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.1);
+}
+
+.left {
+  min-width: 60%;
+  padding: 2rem;
+  background-color: #5fb3b3;
+  border-radius: 1rem 0 0 1rem;
+}
+
+.right {
+  width: 40%;
+  padding: 2rem;
+}
+
+.form {
+  max-width: 20rem;
+  margin: 0 auto;
+}
+
+.input {
+  width: 100%;
+  height: 2.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #5fb3b3;
+}
+
+.button {
+  width: 100%;
+  height: 2.5rem;
+  background-color: #5fb3b3;
+  border: none;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #4d9a9a;
+}
+
+.change-password,
+.change-password-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 30px 5px rgba(0, 0, 0, 0.1);
+}
+
+.close-change-password,
+.close-change-password-error {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.close-change-password:before,
+.close-change-password-error:before {
+  content: "×";
+  font-size: 1.5rem;
+  color: #555;
+}
+
+.hidden {
+  display: none;
+}
