@@ -1,6 +1,7 @@
 const express = require("express");
 const session = require("express-session");
 const mongoose = require("mongoose");
+const { ObjectId } = require("mongoose").Types;
 const bodyParser = require("body-parser");
 const crypto = require("crypto");
 const Passage = require("@passageidentity/passage-node");
@@ -109,6 +110,10 @@ app.get("/", (req, res) => {
 
 app.get("/login", (req, res) => {
   res.render("login");
+});
+
+app.get("/docs", (req, res) => {
+  res.render("docs");
 });
 
 app.get("/settings", passageAuthMiddleware, (req, res) => {
@@ -259,8 +264,11 @@ app.get("/edit-pass/:id", async (req, res) => {
     const user = await User.findOne({ id: req.session.user._id });
     console.log(user);
 
+    // Convert vaultid to ObjectId
+    const objectId = new ObjectId(vaultid);
+
     // Find the object in the vault array with the given ID
-    const editedObject = user.vault.find((item) => item._id === vaultid);
+    const editedObject = user.vault.find((item) => item._id.equals(objectId));
     console.log(editedObject);
 
     if (!editedObject) {
@@ -283,6 +291,45 @@ app.get("/edit-pass/:id", async (req, res) => {
   }
 });
 
+app.post("/edit-vault", async (req, res) => {
+  const websiteName = req.body.websiteName;
+  const username = req.body.username;
+  const password = req.body.password;
+  const vaultId = req.body.id;
+
+  try {
+    // Find the user by their ID
+    const user = await User.findOne({ id: req.session.user._id });
+
+    // Find the index of the vault entry to be edited
+    const index = user.vault.findIndex(
+      (vault) => vault._id.toString() === vaultId
+    );
+
+    if (index === -1) {
+      return res.status(404).send("Vault not found");
+    }
+
+    // Encrypt the new password
+    const encryptedUsername = encrypt(username, user.id);
+    const encryptedPassword = encrypt(password, user.id);
+
+    // Update the vault entry
+    user.vault[index].websiteName = websiteName;
+    user.vault[index].username = encryptedUsername;
+    user.vault[index].password = encryptedPassword;
+    user.vault[index].lastUpdated = new Date(); // Set lastUpdated to current date
+
+    // Save the user with the updated vault
+    await user.save();
+
+    res.redirect("/vault"); // Redirect to the vault page after updating the password
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("An error occurred while editing the vault");
+  }
+});
+
 // Register Page
 app.get("/sign-in", (req, res) => {
   res.render("register", {
@@ -290,8 +337,7 @@ app.get("/sign-in", (req, res) => {
   });
 });
 
-// Schedule the task to run every day at midnight
-cron.schedule("30 22 * * *", async () => {
+cron.schedule("47 22 * * *", async () => {
   try {
     // Get all users from the database
     const users = await User.find();
@@ -345,7 +391,7 @@ async function sendNotificationEmail(email, websiteName) {
     from: "ashishprasadtv@gmail.com",
     to: email,
     subject:
-      "Password Update Reminder for " + websiteName + "from Keyless Vault",
+      "Password Update Reminder for " + websiteName + " from Keyless Vault",
     text: "Your saved password(s) need to be updated. Please log in to your account to update them. -Keyless Vault",
   };
 

@@ -1,328 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Password - Passwordless Password Manager</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <!-- Include Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <!-- Include zxcvbn -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
-    <!-- Custom CSS -->
-    <style>
-      /* Add custom styles here */
-      body {
-        background-color: #f0f0f0;
-      }
-      .container-fluid {
-        padding: 0;
-      }
-      .sidebar {
-        background-color: #333;
-        color: #fff;
-        height: 100vh;
-      }
-      .sidebar ul {
-        list-style-type: none;
-        padding: 0;
-      }
-      .sidebar li {
-        padding: 10px;
-      }
-      .content {
-        padding: 20px;
-      }
-      .form-group {
-        text-align: left;
-      }
-      .password-input {
-        font-weight: bold;
-        padding: 5px;
-        margin-top: 5px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container-fluid">
-      <div class="row">
-        <!-- Sidebar -->
-        <nav class="col-md-2 sidebar">
-          <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/create-vault">Create New Vault</a></li>
-            <li><a href="/vault">Vault</a></li>
-            <li><a href="/settings">Settings</a></li>
-            <!-- Add more sidebar links as needed -->
-          </ul>
-        </nav>
 
-        <!-- Main Content -->
-        <main class="col-md-10 content">
-          <h2>Create New Password</h2>
-          <form id="password-form" method="post" action="/create-vault">
-            <div class="form-group">
-              <label for="websiteName">Website Name:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="websiteName"
-                name="websiteName"
-                value="<%= vault.websiteName %>"
-                required
-                autocomplete="off"
-              />
-            </div>
-            <div class="form-group">
-              <label for="username">Username:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="username"
-                name="username"
-                value="<%= vault.username %>"
-                required
-                autocomplete="off"
-              />
-            </div>
-            <div class="form-group">
-              <label>Password:</label>
-              <input
-                type="text"
-                class="form-control password-input"
-                id="password"
-                name="password"
-                value="<%= vault.password %>"
-                onkeyup="checkPasswordStrength()"
-                autocomplete="off"
-              />
-              <button
-                type="button"
-                class="btn btn-primary mt-2"
-                id="generatePassword"
-              >
-                Generate Password
-              </button>
-            </div>
-            <div id="password-strength"></div>
-            <div class="form-group">
-              <label for="passwordLength">Password Length:</label>
-              <input
-                type="range"
-                class="form-control-range"
-                id="passwordLength"
-                name="passwordLength"
-                min="8"
-                max="20"
-                value="12"
-              />
-              <span id="passwordLengthValue">12</span>
-            </div>
-            <div class="form-check">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                id="includeNumbers"
-                name="includeNumbers"
-                checked
-              />
-              <label class="form-check-label" for="includeNumbers"
-                >Include Numbers</label
-              >
-            </div>
-            <div class="form-check">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                id="includeUppercase"
-                name="includeUppercase"
-                checked
-              />
-              <label class="form-check-label" for="includeUppercase"
-                >Include Uppercase Letters</label
-              >
-            </div>
-            <div class="form-check">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                id="includeLowercase"
-                name="includeLowercase"
-                checked
-              />
-              <label class="form-check-label" for="includeLowercase"
-                >Include Lowercase Letters</label
-              >
-            </div>
-            <div class="form-check">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                id="includeSymbols"
-                name="includeSymbols"
-              />
-              <label class="form-check-label" for="includeSymbols"
-                >Include Symbols</label
-              >
-            </div>
-            <button type="submit" class="btn btn-success mt-3">
-              Save Password
-            </button>
-          </form>
-        </main>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Manager Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom styles */
+    body {
+      font-family: "Outfit", sans-serif !important;
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      margin-top: 50px;
+    }
+
+    .card {
+      padding: 20px;
+      background-color: #3c00a0;
+      margin-bottom: 10%;
+      color: #f8f9fa;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .total-passwords,
+    .passwords-to-update {
+      text-align: center;
+    }
+
+    @media (max-width: 576px) {
+      .container {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav style="background-color: #3c00a0 !important;" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Keyless Vault</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/create-vault">Create Vault</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/vault">Vault</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/settings">Settings</a>
+        </li>
+      </ul>
     </div>
+  </nav>
+  <main class="col-md-10 content">
+    <h2>Edit Password: <%= vault.websiteName %></h2>
+    <form id="password-form" method="post" action="/edit-vault">
+      <div class="form-group">
+        <label for="websiteName">ID:</label>
+        <input type="text" class="form-control" id="id" name="id" value="<%= vault._id %>" readonly autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label for="websiteName">Website Name:</label>
+        <input type="text" class="form-control" id="websiteName" name="websiteName" value="<%= vault.websiteName %>" required autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" name="username" value="<%= vault.username %>" required autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label>Password:</label>
+        <input type="text" class="form-control password-input" id="password" name="password" value="<%= vault.password %>" onkeyup="checkPasswordStrength()" autocomplete="off" />
+        <button type="button" class="btn btn-primary mt-2" id="generatePassword">
+          Generate Password
+        </button>
+      </div>
+      <div id="password-strength"></div>
+      <div class="form-group">
+        <label for="passwordLength">Password Length:</label>
+        <input type="range" class="form-control-range" id="passwordLength" name="passwordLength" min="8" max="20" value="12" />
+        <span id="passwordLengthValue">12</span>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="includeNumbers" name="includeNumbers" checked />
+        <label class="form-check-label" for="includeNumbers">Include Numbers</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="includeUppercase" name="includeUppercase" checked />
+        <label class="form-check-label" for="includeUppercase">Include Uppercase Letters</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="includeLowercase" name="includeLowercase" checked />
+        <label class="form-check-label" for="includeLowercase">Include Lowercase Letters</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="includeSymbols" name="includeSymbols" />
+        <label class="form-check-label" for="includeSymbols">Include Symbols</label>
+      </div>
+      <button type="submit" class="btn btn-success mt-3">
+        Update Password
+      </button>
+    </form>
+  </main>
 
-    <!-- JavaScript -->
-    <!-- Include Bootstrap JS and jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-      // Function to generate a random password based on user preferences
-      function generateRandomPassword() {
-        const length = parseInt($("#passwordLength").val());
-        const includeNumbers = $("#includeNumbers").prop("checked");
-        const includeUppercase = $("#includeUppercase").prop("checked");
-        const includeLowercase = $("#includeLowercase").prop("checked");
-        const includeSymbols = $("#includeSymbols").prop("checked");
+  <!-- Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.min.js"></script>
+  <script>
+    // Function to generate a random password based on user preferences
+    function generateRandomPassword() {
+      const length = parseInt($("#passwordLength").val());
+      const includeNumbers = $("#includeNumbers").prop("checked");
+      const includeUppercase = $("#includeUppercase").prop("checked");
+      const includeLowercase = $("#includeLowercase").prop("checked");
+      const includeSymbols = $("#includeSymbols").prop("checked");
 
-        const charset = "abcdefghijklmnopqrstuvwxyz";
-        const numbers = "0123456789";
-        const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const symbols = "!@#$%^&*()-_=+[]{}|;:'\",.<>/?";
+      const charset = "abcdefghijklmnopqrstuvwxyz";
+      const numbers = "0123456789";
+      const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const symbols = "!@#$%^&*()-_=+[]{}|;:'\",.<>/?";
 
-        let validChars = charset;
-        if (includeNumbers) validChars += numbers;
-        if (includeUppercase) validChars += uppercase;
-        if (includeLowercase) validChars += charset;
-        if (includeSymbols) validChars += symbols;
+      let validChars = charset;
+      if (includeNumbers) validChars += numbers;
+      if (includeUppercase) validChars += uppercase;
+      if (includeLowercase) validChars += charset;
+      if (includeSymbols) validChars += symbols;
 
-        let password = "";
-        for (let i = 0; i < length; i++) {
-          const randomIndex = Math.floor(Math.random() * validChars.length);
-          password += validChars[randomIndex];
-        }
-
-        $("#password").val(password);
-        checkPasswordStrength(); // Check strength after generating
+      let password = "";
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * validChars.length);
+        password += validChars[randomIndex];
       }
 
-      $(document).ready(function () {
-        // Initialize password length slider value
-        $("#passwordLengthValue").text($("#passwordLength").val());
+      $("#password").val(password);
+      checkPasswordStrength(); // Check strength after generating
+    }
 
-        // Update slider value on change
-        $("#passwordLength").on("input", function () {
-          $("#passwordLengthValue").text($(this).val());
-          generateRandomPassword(); // Regenerate on length change
-        });
+    $(document).ready(function() {
+      // Initialize password length slider value
+      $("#passwordLengthValue").text($("#passwordLength").val());
 
-        // Generate password when "Generate Password" button is clicked
-        $("#generatePassword").click(function () {
-          generateRandomPassword();
-        });
+      // Update slider value on change
+      $("#passwordLength").on("input", function() {
+        $("#passwordLengthValue").text($(this).val());
+        generateRandomPassword(); // Regenerate on length change
       });
 
-      // Function to check password strength
-      function checkPasswordStrength() {
-        const passwordInput = document.getElementById("password");
-        const passwordStrengthContainer =
-          document.getElementById("password-strength");
-        const password = passwordInput.value;
-
-        // Use zxcvbn to evaluate password strength
-        const result = zxcvbn(password);
-
-        // Display the strength score
-        const score = result.score; // 0 to 4
-        const strengthLabels = [
-          "Very Weak",
-          "Weak",
-          "Fair",
-          "Strong",
-          "Very Strong",
-        ];
-        const strengthText = strengthLabels[score];
-
-        // Display the estimated cracking time
-        const crackingTime =
-          result.crack_times_display.offline_slow_hashing_1e4_per_second;
-
-        // Display the results
-        passwordStrengthContainer.innerHTML = `Password Strength: ${strengthText}<br>Estimated Cracking Time: ${crackingTime}`;
-      }
-    </script>
-    <script>
-      // ...
-
-      // Prevent form submission
-      $("#password-form").submit(function (e) {
-        e.preventDefault();
-
-        // Add your code to save the password to your database or perform other actions here
-        // For demonstration purposes, let's assume the form submission is successful
-        const form = this;
-        const websiteName = $("#websiteName").val();
-        const username = $("#username").val();
-        const password = $("#password").val();
-
-        // Use zxcvbn to evaluate password strength
-        const result = zxcvbn(password);
-
-        // Display a warning if password strength is "Very Weak" or "Weak"
-        if (result.score <= 1) {
-          Swal.fire({
-            icon: "warning",
-            title: "Warning",
-            text: "This password is very weak. Are you sure you want to save it?",
-            showCancelButton: true,
-            confirmButtonText: "Yes, Save",
-            cancelButtonText: "No, Don't Save",
-            reverseButtons: true,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // Password is weak, but the user wants to save it
-              savePasswordAndSubmit(form, true); // Pass true to indicate a warning
-            }
-          });
-        } else {
-          // Password strength is fair, strong, or very strong, proceed with success
-          savePasswordAndSubmit(form, false); // Pass false to indicate success
-        }
+      // Generate password when "Generate Password" button is clicked
+      $("#generatePassword").click(function() {
+        generateRandomPassword();
       });
+    });
 
-      // Function to save the password and submit the form
-      function savePasswordAndSubmit(form, isWarning) {
-        // You can replace this with your actual code to save the data to the database
-        // In this example, we're using a setTimeout to simulate a successful submission
-        setTimeout(function () {
-          // Show SweetAlert based on whether it's a warning or success
-          const alertOptions = isWarning
-            ? {
-                icon: "warning",
-                title: "Warning",
-                text: "Password saved with warning!",
-                timer: 2000, // Close alert after 2 seconds
-              }
-            : {
-                icon: "success",
-                title: "Success",
-                text: "Password saved successfully!",
-                timer: 2000, // Close alert after 2 seconds
-              };
+    // Function to check password strength
+    function checkPasswordStrength() {
+      const passwordInput = document.getElementById("password");
+      const passwordStrengthContainer =
+        document.getElementById("password-strength");
+      const password = passwordInput.value;
 
-          Swal.fire(alertOptions).then(() => {
-            // Submit the form after success
-            form.submit();
-          });
-        }, 1000); // Simulate a 1-second delay (you can remove this in your actual code)
+      // Use zxcvbn to evaluate password strength
+      const result = zxcvbn(password);
+
+      // Display the strength score
+      const score = result.score; // 0 to 4
+      const strengthLabels = [
+        "Very Weak",
+        "Weak",
+        "Fair",
+        "Strong",
+        "Very Strong",
+      ];
+      const strengthText = strengthLabels[score];
+
+      // Display the estimated cracking time
+      const crackingTime =
+        result.crack_times_display.offline_slow_hashing_1e4_per_second;
+
+      // Display the results
+      passwordStrengthContainer.innerHTML = `Password Strength: ${strengthText}<br>Estimated Cracking Time: ${crackingTime}`;
+    }
+  </script>
+  <script>
+    // ...
+
+    // Prevent form submission
+    $("#password-form").submit(function(e) {
+      e.preventDefault();
+
+      // Add your code to save the password to your database or perform other actions here
+      // For demonstration purposes, let's assume the form submission is successful
+      const form = this;
+      const websiteName = $("#websiteName").val();
+      const username = $("#username").val();
+      const password = $("#password").val();
+
+      // Use zxcvbn to evaluate password strength
+      const result = zxcvbn(password);
+
+      // Display a warning if password strength is "Very Weak" or "Weak"
+      if (result.score <= 1) {
+        Swal.fire({
+          icon: "warning",
+          title: "Warning",
+          text: "This password is very weak. Are you sure you want to save it?",
+          showCancelButton: true,
+          confirmButtonText: "Yes, Save",
+          cancelButtonText: "No, Don't Save",
+          reverseButtons: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Password is weak, but the user wants to save it
+            savePasswordAndSubmit(form, true); // Pass true to indicate a warning
+          }
+        });
+      } else {
+        // Password strength is fair, strong, or very strong, proceed with success
+        savePasswordAndSubmit(form, false); // Pass false to indicate success
       }
-    </script>
-  </body>
+    });
+
+    // Function to save the password and submit the form
+    function savePasswordAndSubmit(form, isWarning) {
+      // You can replace this with your actual code to save the data to the database
+      // In this example, we're using a setTimeout to simulate a successful submission
+      setTimeout(function() {
+        // Show SweetAlert based on whether it's a warning or success
+        const alertOptions = isWarning ? {
+          icon: "warning",
+          title: "Warning",
+          text: "Password updated with warning!",
+          timer: 2000, // Close alert after 2 seconds
+        } : {
+          icon: "success",
+          title: "Success",
+          text: "Password Updated successfully!",
+          timer: 2000, // Close alert after 2 seconds
+        };
+
+        Swal.fire(alertOptions).then(() => {
+          // Submit the form after success
+          form.submit();
+        });
+      }, 1000); // Simulate a 1-second delay (you can remove this in your actual code)
+    }
+  </script>
+</body>
+
 </html>

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://kit.fontawesome.com/86a57bbe47.js" crossorigin="anonymous"></script>
   <style>
     /* Custom styles */
     body {
@@ -77,21 +78,21 @@
             <th>Website Name</th>
             <th>Username</th>
             <th>Password</th>
-            <!-- <th>Edit</th>
-                <th>Delete</th> -->
+            <th>Edit</th>
+            <!-- <th>Delete</th> -->
           </tr>
         </thead>
         <tbody>
           <% user.vault.forEach(function(pass) { %>
           <tr>
-            <td><%= pass.lastUpdated %></td>
+            <td><%= pass.lastUpdated.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, day: '2-digit', month: 'short', year: 'numeric' }) %></td>
             <td><%= pass.websiteName %></td>
             <td><%= pass.username %></td>
             <td><%= pass.password %></td>
+            <td>
+              <a href="/edit-pass/<%= pass._id %>"><i class="fa-solid fa-pen-to-square"></i></a>
+            </td>
             <!-- <td>
-                  <a href="/edit-pass/<%= pass._id %>"><i class="fa-solid fa-pen-to-square"></i></a>
-                </td>
-                <td>
                   <a href="/delete-pass/<%= pass._id %>"><i class="fa-solid fa-trash" style="color: red"></i></a>
                 </td> -->
           </tr>
